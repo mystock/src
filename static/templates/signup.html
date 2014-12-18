@@ -4,8 +4,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <h1>Welcome</h1>
+        <p>We are here to provide the quickest and most convenience way for you to view stock market data.</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
@@ -33,13 +33,11 @@
         
         <div class="col-sm-3">
             <h1>Join Now:)</h1>
-                <form method='POST' action=''> {% csrf_token %}
+                <form method='GET' action=''> {% csrf_token %}
                     {{ form.as_p }}
                     
                     <input type='submit' class = 'btn btn-success btn-lg btn-block'>
                 </form>
 </div>
     
-
-
 {% endblock %}
