@@ -1,7 +1,7 @@
 .jumbotron {
   background-color: #85B2F7;
   background-image: url('../img/ocean.jpg');
-    background-size: auto;
+    background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
 }

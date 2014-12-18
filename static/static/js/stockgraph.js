@@ -46,7 +46,7 @@ function drawGraph(data) {
             id: "graph1",
             valueField: "value",
             type: "line",
-            title: "MyGraph",
+            title: "",
             fillAlphas: 0,
             lineThickness: 3
         }]
