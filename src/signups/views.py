@@ -9,6 +9,9 @@ import datetime
 
 from .forms import SignUpForm, TickerForm
 
+ticker = ""
+GLOBAL_Entry = None
+
 def home(request):
     
     form = SignUpForm(request.POST or None)
@@ -47,8 +50,10 @@ def dashboard(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            var = ystockquote.get_price(Tickerform.cleaned_data['ticker_name'])
-            messages.success(request, 'Current Price of '+ Tickerform.cleaned_data['ticker_name'] + var);
+            global ticker, GLOBAL_Entry
+            ticker = Tickerform.cleaned_data['ticker_name']
+            var = ystockquote.get_price(ticker)
+            messages.success(request, 'Current Price of '+ Tickerform.cleaned_data['ticker_name']+' is ' + var);
             
             
     # if a GET (or any other method) we'll create a blank form
@@ -61,8 +66,8 @@ def dashboard(request):
 def data(request):
     
     now = datetime.datetime.now()
-
-    all_prices = ystockquote.get_historical_prices('VFINX', '2014-01-01', now.strftime("%Y-%m-%d"))
+    global ticker, GLOBAL_Entry
+    all_prices = ystockquote.get_historical_prices(ticker, '1970-01-01', now.strftime("%Y-%m-%d"))
             
     #file = open("CSVprices.csv", "w")
             
@@ -72,7 +77,7 @@ def data(request):
         
         dateAndPrice.append({'date': each, 'val': float(all_prices[each]['Close'])})
     
-    
+    dateAndPrice.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%Y-%m-%d'))
     return HttpResponse(json.dumps(dateAndPrice), content_type="application/json")
 
 #def get_name(request):
