@@ -24,6 +24,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'django.contrib.auth.views.logout'
+
 ALLOWED_HOSTS = []
 
 

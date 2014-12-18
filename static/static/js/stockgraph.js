@@ -7,15 +7,13 @@ var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
 
 
-var chartData;
-
 $.ajax({
     url: '/data',
     type: 'get', //this is the default though, you don't actually need to always mention it
     dataType: 'json',
     success: function(data) {
     
-        alert(JSON.stringify(data));
+        //alert(JSON.stringify(data));
         //chartData = JSON.stringify(data);
         drawGraph(data);
     },
@@ -26,77 +24,84 @@ $.ajax({
 
 function drawGraph(data) {
 
+    chartdata = data;
+    AmCharts.makeChart("chartdiv", {
+    type: "stock",
+    pathToImages: "/static/amstockchart_3.11.3.free/amcharts/images/",
+    dataDateFormat: "YYYY-MM-DD",
+    dataSets: [{
+        dataProvider: chartdata,
+        fieldMappings: [{
+            fromField: "val",
+            toField: "value"
+        }],
+        categoryField: "date"
+    }],
 
-    chartData=data;
-    
-    var chart = new AmCharts.AmStockChart();
-    chart.pathToImages = "/static/amstockchart_3.11.3.free/amcharts/images/";
-    chart.dataProvider = chartData;
-    chart.categoryField = "date"
-    chart.fontSize = 9;
-    chart.startDuration = 1;
-    chart.plotAreaFillAlphas = 0.2;
-     
-    //here you can add code for other options
-     
-    chart.write("chartdiv");
- 
-    
-    chartData=data;
-    
-    var chart = new AmCharts.AmStockChart();
-    chart.pathToImages = "/static/amstockchart_3.11.3.free/amcharts/images/";
-    
-    var dataSet = new AmCharts.DataSet();
-    dataSet.dataProvider = chartData;
-    dataSet.fieldMappings = [{fromField:"val", toField:"value"}];   
-    dataSet.categoryField = "date";          
-    chart.dataSets = [dataSet];
+    panels: [{
 
-    var stockPanel = new AmCharts.StockPanel();
-    chart.panels = [stockPanel];
+        legend: {},
 
-    var legend = new AmCharts.StockLegend();
-    stockPanel.stockLegend = legend;                
+        stockGraphs: [{
+            id: "graph1",
+            valueField: "value",
+            type: "line",
+            title: "MyGraph",
+            fillAlphas: 0,
+            lineThickness: 3
+        }]
+    }],
 
-    var panelsSettings = new AmCharts.PanelsSettings();
-    panelsSettings.startDuration = 1;
-    chart.panelsSettings = panelsSettings;   
+    panelsSettings: {
+        startDuration: 1
+    },
 
-    var graph = new AmCharts.StockGraph();
-    graph.valueField = "value";
-    graph.type = "line";
-    graph.title = "MyGraph";
-    graph.fillAlphas = 0;
-    stockPanel.addStockGraph(graph);
+    categoryAxesSettings: {
+        dashLength: 5
+    },
 
-    var categoryAxesSettings = new AmCharts.CategoryAxesSettings();
-    categoryAxesSettings.dashLength = 5;
-    chart.categoryAxesSettings = categoryAxesSettings;
+    valueAxesSettings: {
+        dashLength: 5
+    },
 
-    var valueAxesSettings = new AmCharts.ValueAxesSettings();
-    valueAxesSettings .dashLength = 5;
-    chart.valueAxesSettings  = valueAxesSettings;
+    chartScrollbarSettings: {
+        graph: "graph1",
+        graphType: "line"
+    },
 
-    var chartScrollbarSettings = new AmCharts.ChartScrollbarSettings();
-    chartScrollbarSettings.graph = graph;
-    chartScrollbarSettings.graphType = "line";
-    chart.chartScrollbarSettings = chartScrollbarSettings;
+    chartCursorSettings: {
+        valueBalloonsEnabled: true
+    },
 
-    var chartCursorSettings = new AmCharts.ChartCursorSettings();
-    chartCursorSettings.valueBalloonsEnabled = true;
-    chart.chartCursorSettings = chartCursorSettings;
-
-    var periodSelector = new AmCharts.PeriodSelector();
-    periodSelector.periods = [{period:"DD", count:1, label:"1 day"},
-                              {period:"DD", selected:true, count:5, label:"5 days"},
-                              {period:"MM", count:1, label:"1 month"},
-                              {period:"YYYY", count:1, label:"1 year"},
-                              {period:"YTD", label:"YTD"},
-                              {period:"MAX", label:"MAX"}];                
-    chart.periodSelector = periodSelector;
-    
-    chart.write("chartdiv");
+    periodSelector: {
+        periods: [{
+            period: "DD",
+            count: 1,
+            label: "1 day"
+        }, {
+            period: "DD",
+            selected: true,
+            count: 5,
+            label: "5 days"
+        }, {
+            period: "MM",
+            count: 1,
+            label: "1 month"
+        }, {
+            period: "YYYY",
+            count: 1,
+            label: "1 year"
+        }, {
+            period: "YTD",
+            label: "YTD"
+        }, {
+            period: "MAX",
+            label: "MAX"
+        }]
+    }
+});
 }
+
+
 
         

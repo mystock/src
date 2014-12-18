@@ -40,6 +40,11 @@ def aboutus(request):
     return render_to_response("aboutus.html",
                               locals(),
                               context_instance=RequestContext(request))
+def logoutsuccess(request):
+    
+    return render_to_response("logout_success.html",
+                              locals(),
+                              context_instance=RequestContext(request))
 
 def dashboard(request):
     Tickerform = TickerForm(request.POST)

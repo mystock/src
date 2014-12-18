@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     url(r'^about-us/$', 'signups.views.aboutus', name='aboutus'),
     url(r'^Dashboard/$', 'signups.views.dashboard', name='dashboard'),
     url(r'^data/$', 'signups.views.data', name='data'),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/logoutsuccess'}),
+    url(r'^logoutsuccess/$', 'signups.views.logoutsuccess', name='logout'),
     url(r'^admin/', include(admin.site.urls)),
 )
 
